@@ -18,6 +18,9 @@ import streamlit as st
 from langchain_core.messages import HumanMessage,AIMessage,SystemMessage
 from langchain import hub
 from langchain.chains import create_retrieval_chain
+from my_py_settings import settings_variable
+
+api_key_of_mistral = settings_variable.MISTRAL_API_KEY
 
 print(f"LangChain version: {langchain.__version__}") # 0.3.27
 
@@ -63,7 +66,7 @@ if asked_question:
         st.session_state.messages.append(HumanMessage(asked_question))
 
 
-    llm = ChatMistralAI(model_name="magistral-small-2509",api_key="oJ6wgJeUMlciaLyoojF2OUancT1FoOAe")
+    llm = ChatMistralAI(model_name="magistral-small-2509",api_key=api_key_of_mistral)
     document_chain = create_stuff_documents_chain(llm=llm,prompt=prompt)
     retriever = vector_db.as_retriever()
     retriever_chain = create_retrieval_chain(retriever,document_chain)
